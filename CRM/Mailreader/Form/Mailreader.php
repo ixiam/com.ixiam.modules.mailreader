@@ -38,7 +38,8 @@ class CRM_Mailreader_Form_Mailreader extends CRM_Core_Form {
 
     if ($mailingInfo['outBound_option'] <> '5') {
       // Issue a warning and do nothing
-      $warning = ts('Your <a href="%1">CiviCRM mailer option</a> is not set to <strong>"Redirect to Database"</strong>. I got nothing to show you.', array( "1" => '/civicrm/admin/setting/smtp?reset=1', 'domain' => 'com.ixiam.modules.mailreader'));
+      $url = CRM_Utils_System::url('civicrm/admin/setting/smtp', 'reset=1');
+      $warning = ts('Your <a href="%1">CiviCRM mailer option</a> is not set to <strong>"Redirect to Database"</strong>. I got nothing to show you.', array( "1" => $url, 'domain' => 'com.ixiam.modules.mailreader'));
       $skip = TRUE;
     } else {
 
