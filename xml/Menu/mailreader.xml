@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <menu>
   <item>
-    <path>civicrm/mailreader/viewer</path>
+    <path>civicrm/admin/emailviewer</path>
     <page_callback>CRM_Mailreader_Form_Mailreader</page_callback>
     <title>Mailreader</title>
     <access_arguments>administer CiviCRM</access_arguments>
