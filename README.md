@@ -1,3 +1,5 @@
+# Project moved to https://lab.civicrm.org/extensions/mailreader
+
 # com.ixiam.modules.mailreader
 
 ## What this extension does?
