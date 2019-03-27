@@ -1,5 +1,9 @@
 ## Changelog
 
+* v1.1.1 : 
+
+ * Proper menu structure
+
 * v1.1 :
 
  * Change of menu and URL path

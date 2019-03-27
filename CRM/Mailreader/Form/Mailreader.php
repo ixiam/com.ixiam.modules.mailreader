@@ -13,6 +13,8 @@
   +--------------------------------------------------------------------+
  */
 
+use CRM_Mailreader_ExtensionUtil as E;
+
 class CRM_Mailreader_Form_Mailreader extends CRM_Core_Form {
 
   public $_action;
@@ -25,7 +27,7 @@ class CRM_Mailreader_Form_Mailreader extends CRM_Core_Form {
     $skip = FALSE;
 
     // Set page title
-    CRM_Utils_System::setTitle(ts('Stored Email viewer'));
+    CRM_Utils_System::setTitle(E::ts('Stored Email viewer'));
 
     // Fetch the mailing preferences
     $mailingInfo = CRM_Core_BAO_Setting::getItem(CRM_Core_BAO_Setting::MAILING_PREFERENCES_NAME, 'mailing_backend');
@@ -33,14 +35,14 @@ class CRM_Mailreader_Form_Mailreader extends CRM_Core_Form {
     if ($mailingInfo['outBound_option'] != '5') {
       // Issue a warning and do nothing
       $url = CRM_Utils_System::url('civicrm/admin/setting/smtp', 'reset=1');
-      $warning = ts('Your <a href="%1">CiviCRM mailer option</a> is not set to <strong>"Redirect to Database"</strong>. I got nothing to show you.', array("1" => $url, 'domain' => 'com.ixiam.modules.mailreader'));
+      $warning = E::ts('Your <a href="%1">CiviCRM mailer option</a> is not set to <strong>"Redirect to Database"</strong>. I got nothing to show you.', array("1" => $url, 'domain' => 'com.ixiam.modules.mailreader'));
       $skip = TRUE;
     }
     else {
       // Limit to X rows by default
-      $this->add('text', 'limit_to', ts('Limit to: ', array('domain' => 'com.ixiam.modules.mailreader')), array('size' => 6, 'maxlength' => 6));
+      $this->add('text', 'limit_to', E::ts('Limit to: ', array('domain' => 'com.ixiam.modules.mailreader')), array('size' => 6, 'maxlength' => 6));
       // Show last rows first, by default
-      $this->add('checkbox', 'show_last', ts('Show in DESCending order', array('domain' => 'com.ixiam.modules.mailreader')));
+      $this->add('checkbox', 'show_last', E::ts('Show in DESCending order', array('domain' => 'com.ixiam.modules.mailreader')));
       // Count how many rows do we have
       $countrows = $this->countlog();
       // Populate the table
@@ -63,12 +65,12 @@ class CRM_Mailreader_Form_Mailreader extends CRM_Core_Form {
         array(
           'type' => 'refresh',
           'subName' => 'refresh',
-          'name' => ts('Refresh listing', array('domain' => 'com.ixiam.modules.mailreader')),
+          'name' => E::ts('Refresh listing', array('domain' => 'com.ixiam.modules.mailreader')),
         ),
         array(
           'type' => 'submit',
           'subName' => 'delete_all',
-          'name' => ts('Delete ALL entries', array('domain' => 'com.ixiam.modules.mailreader')),
+          'name' => E::ts('Delete ALL entries', array('domain' => 'com.ixiam.modules.mailreader')),
         ),
       ));
 
@@ -126,7 +128,7 @@ class CRM_Mailreader_Form_Mailreader extends CRM_Core_Form {
       // We will now be deleting all the log entries
       $this->deletelog();
       // After deletion, redirect
-      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/admin/emailviewer', '&reset=1'));
+      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/admin/mailreader', '&reset=1'));
     }
 
     if (isset($params['limit_to']) && isset($params['_qf_Mailreader_refresh_refresh'])) {
@@ -139,7 +141,7 @@ class CRM_Mailreader_Form_Mailreader extends CRM_Core_Form {
         $urlParams .= '&order=ASC';
       }
       $urlParams .= '&reset=1';
-      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/admin/emailviewer', $urlParams));
+      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/admin/mailreader', $urlParams));
     }
 
     // Export the selected email into .eml format
@@ -149,8 +151,8 @@ class CRM_Mailreader_Form_Mailreader extends CRM_Core_Form {
       $exportable_filename = 'mail_' . date_timestamp_get(date_create()) . '.eml';
       $output_file = self::write_to_csv($selected_record, 'mailreader', $exportable_filename);
 
-      $status = ts('Right click <a href="%1">here</a> and "Save target as ..." to save the exported EML file', array(1 => $output_file));
-      CRM_Core_Session::setStatus($status, ts("Exported to EML", array()), 'success', array('expires' => 0));
+      $status = E::ts('Right click <a href="%1">here</a> and "Save target as ..." to save the exported EML file', array(1 => $output_file));
+      CRM_Core_Session::setStatus($status, E::ts("Exported to EML", array()), 'success', array('expires' => 0));
     }
   }
 

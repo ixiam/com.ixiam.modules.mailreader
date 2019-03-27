@@ -139,27 +139,14 @@ function mailreader_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
  * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_navigationMenu
  */
 function mailreader_civicrm_navigationMenu(&$menu) {
-  $pages = array(
-    'admin_page' => array(
-      'label' => ts('View stored email log', array('domain' => 'com.ixiam.modules.mailreader')),
-      'name' => ts('Stored Email reader', array('domain' => 'com.ixiam.modules.mailreader')),
-      'url' => 'civicrm/admin/emailviewer',
-      'parent' => array('Administer', 'Administration Console'),
-      'permission' => 'administer CiviCRM',
-      'operator' => 'AND',
-      'separator' => NULL,
-      'active' => 1,
-    ),
-  );
-  foreach ($pages as $item) {
-    // Check that our item doesn't already exist.
-    $menu_item_search = array('url' => $item['url']);
-    $menu_items = array();
-    CRM_Core_BAO_Navigation::retrieve($menu_item_search, $menu_items);
-    if (empty($menu_items)) {
-      $path = implode('/', $item['parent']);
-      unset($item['parent']);
-      _mailreader_civix_insert_navigation_menu($menu, $path, $item);
-    }
-  }
+  $parent_path = "Administer/Administration Console";
+  _mailreader_civix_insert_navigation_menu($menu, $parent_path, array(
+    'label' => E::ts('View E-mail Log', array('domain' => 'com.ixiam.modules.mailreader')),
+    'name' => 'stored_email_reader',
+    'url' => 'civicrm/admin/mailreader',
+    'permission' => 'administer CiviCRM',
+    'operator' => '',
+    'separator' => NULL,
+    'active' => 1
+  ));
 }
